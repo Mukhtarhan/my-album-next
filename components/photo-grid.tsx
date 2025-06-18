@@ -18,18 +18,27 @@ interface Photo {
   }
 }
 
-export function PhotoGrid() {
+interface PhotoGridProps {
+  searchQuery?: string
+}
+
+export function PhotoGrid({ searchQuery }: PhotoGridProps) {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchPhotos()
-  }, [])
+  }, [searchQuery])
 
   const fetchPhotos = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/photos?count=9")
+      let url = "/api/photos?count=9"
+      if (searchQuery) {
+        url += `&query=${encodeURIComponent(searchQuery)}`
+      }
+
+      const response = await fetch(url)
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -37,7 +46,6 @@ export function PhotoGrid() {
 
       const data = await response.json()
 
-      // Ensure data is an array
       if (Array.isArray(data)) {
         setPhotos(data)
       } else {
@@ -54,7 +62,7 @@ export function PhotoGrid() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-6">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="aspect-square bg-gray-200 animate-pulse rounded-lg" />
         ))}
@@ -65,17 +73,19 @@ export function PhotoGrid() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Random Photos</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          {searchQuery ? `Поиск: ${searchQuery}` : "Случайные фотографии"}
+        </h1>
         <Button onClick={fetchPhotos} variant="outline" size="sm">
           <RefreshCw className="w-4 h-4 mr-2" />
-          Refresh
+          Обновить
         </Button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-6">
         {photos.map((photo) => (
           <Link key={photo.id} href={`/photo/${photo.id}`}>
-            <div className="relative aspect-square rounded-lg overflow-hidden hover:opacity-90 transition-opacity group">
+            <div className="relative aspect-square rounded-lg overflow-hidden hover:opacity-90 transition-all duration-300 group shadow-md hover:shadow-lg">
               <Image
                 src={photo.urls.regular || "/placeholder.svg"}
                 alt={photo.alt_description || "Photo"}
