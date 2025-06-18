@@ -1,12 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server";
 
-const UNSPLASH_ACCESS_KEY = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY || "demo-key"
+const UNSPLASH_ACCESS_KEY = "s5zcqAOkhjyphb5ilLC7kcdStS79FPnmYpbfra7wPwQ";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     // Handle mock photos
     if (params.id.startsWith("mock-")) {
-      const mockId = params.id.replace("mock-", "")
+      const mockId = params.id.replace("mock-", "");
       return NextResponse.json({
         id: params.id,
         urls: {
@@ -21,27 +24,24 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         },
         description: `This is a mock photo ${mockId} for demonstration purposes.`,
         likes: Math.floor(Math.random() * 1000),
-      })
+      });
     }
 
-    if (UNSPLASH_ACCESS_KEY === "demo-key") {
-      return NextResponse.json({ error: "Photo not found" }, { status: 404 })
-    }
-
-    const response = await fetch(`https://api.unsplash.com/photos/${params.id}?client_id=${UNSPLASH_ACCESS_KEY}`, {
-      headers: {
-        Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
-      },
-    })
+    const response = await fetch(
+      `https://api.unsplash.com/photos/${params.id}?client_id=${UNSPLASH_ACCESS_KEY}`
+    );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch photo")
+      throw new Error("Failed to fetch photo");
     }
 
-    const data = await response.json()
-    return NextResponse.json(data)
+    const data = await response.json();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("Error fetching photo:", error)
-    return NextResponse.json({ error: "Failed to fetch photo" }, { status: 500 })
+    console.error("Error fetching photo:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch photo" },
+      { status: 500 }
+    );
   }
 }

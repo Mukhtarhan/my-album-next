@@ -1,6 +1,6 @@
-import { FavoritesGrid } from "@/components/favorites-grid"
-import { Navigation } from "@/components/navigation"
-import { Sidebar } from "@/components/sidebar"
+import { FavoritesGrid } from "@/components/favorites-grid";
+import { Navigation } from "@/components/navigation";
+import { Sidebar } from "@/components/sidebar";
 
 export default function FavoritesPage() {
   return (
@@ -8,13 +8,13 @@ export default function FavoritesPage() {
       <Navigation />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
+        <main className="flex-1 p-4">
+          <div className="max-w-screen-xl mx-auto">
             <h1 className="text-2xl font-bold mb-6">Избранное</h1>
             <FavoritesGrid />
           </div>
         </main>
       </div>
     </div>
-  )
+  );
 }

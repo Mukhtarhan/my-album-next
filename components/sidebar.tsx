@@ -1,72 +1,77 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Photo {
-  id: string
+  id: string;
   urls: {
-    small: string
-    regular: string
-  }
-  alt_description: string
+    small: string;
+    regular: string;
+  };
+  alt_description: string;
 }
 
 export function Sidebar() {
-  const [photos, setPhotos] = useState<Photo[]>([])
-  const [loading, setLoading] = useState(true)
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchSidebarPhotos()
-  }, [])
+    fetchSidebarPhotos();
+  }, []);
 
   const fetchSidebarPhotos = async () => {
     try {
-      const response = await fetch("/api/photos?count=12")
+      const response = await fetch("/api/photos?count=12");
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
       // Ensure data is an array
       if (Array.isArray(data)) {
-        setPhotos(data)
+        setPhotos(data);
       } else {
-        console.error("API response is not an array:", data)
-        setPhotos([])
+        console.error("API response is not an array:", data);
+        setPhotos([]);
       }
     } catch (error) {
-      console.error("Error fetching sidebar photos:", error)
-      setPhotos([])
+      console.error("Error fetching sidebar photos:", error);
+      setPhotos([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (loading) {
     return (
       <aside className="w-24 bg-white border-r border-gray-200 p-2">
         <div className="space-y-2">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="w-16 h-16 bg-gray-200 animate-pulse rounded" />
+            <div
+              key={i}
+              className="w-16 h-16 bg-gray-200 animate-pulse rounded"
+            />
           ))}
         </div>
       </aside>
-    )
+    );
   }
 
   return (
-    <aside className="w-24 bg-white border-r border-gray-200 p-2">
+    <aside className=" bg-white border-r border-gray-200 p-2 sm:flex hidden">
       <div className="space-y-2">
         {photos.length > 0 ? (
           photos.map((photo) => (
             <Link key={photo.id} href={`/photo/${photo.id}`}>
-              <div className="relative w-16 h-16 rounded overflow-hidden hover:opacity-80 transition-opacity">
+              <div className="relative w-16 mb-2 h-16 rounded overflow-hidden hover:opacity-80 transition-opacity">
                 <Image
-                  src={photo.urls.small || "/placeholder.svg?height=64&width=64"}
+                  src={
+                    photo.urls.small || "/placeholder.svg?height=64&width=64"
+                  }
                   alt={photo.alt_description || "Photo"}
                   fill
                   className="object-cover"
@@ -80,5 +85,5 @@ export function Sidebar() {
         )}
       </div>
     </aside>
-  )
+  );
 }
