@@ -40,7 +40,7 @@ export function HeroSection({ onSearch }: HeroSectionProps) {
               placeholder="Поиск"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-12 py-4 text-lg bg-white/90 backdrop-blur-sm border-0  shadow-lg focus:bg-white focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-6 pr-12 py-6 text-xl bg-white/90 backdrop-blur-sm border-0  shadow-lg focus:bg-white focus:ring-2 focus:ring-blue-500"
             />
             <Button
               type="submit"

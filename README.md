@@ -2,13 +2,11 @@
 
 A modern and responsive Next.js app that displays random or search-based photos using the [Unsplash API](https://unsplash.com/developers). Built with Tailwind CSS, TypeScript, and deployed via Vercel.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/mukhtarhans-projects/v0-random-unsplash-photos)
-
 ---
 
 ## 🌐 Live Demo
 
-🔗 [View on Vercel](https://vercel.com/mukhtarhans-projects/v0-random-unsplash-photos)
+🔗 [View on Vercel](https://my-album-next.vercel.app/)
 
 ---
 

@@ -9,8 +9,8 @@ export default function FavoritesPage() {
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-4">
-          <div className="max-w-screen-xl mx-auto">
-            <h1 className="text-2xl font-bold mb-6">Избранное</h1>
+          <div className="max-w-screen-xl mx-auto pr-3 pl-3 sm:pl-0 sm:pr-12">
+            <h1 className="text-2xl font-bold mb-6 mt-8">Избранное</h1>
             <FavoritesGrid />
           </div>
         </main>

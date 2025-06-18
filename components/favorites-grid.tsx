@@ -76,7 +76,7 @@ export function FavoritesGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
       {favoritePhotos.map((photo) => (
         <div key={photo.id} className="relative group">
           <Link href={`/photo/${photo.id}`}>
